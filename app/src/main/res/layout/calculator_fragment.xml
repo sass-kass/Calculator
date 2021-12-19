@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.android.navigation.Calculator">
+    
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.calculator.calculator.CalculatorViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/image_history"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="@dimen/default_margin"
+            android:padding="@dimen/default_padding"
+            android:src="@drawable/history_picture"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/input_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:gravity="start"
+            android:padding="@dimen/default_padding"
+            android:text="@{viewModel.inputString}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="34sp"
+            android:maxLines="1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image_history" />
+
+        <TextView
+            android:id="@+id/output_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:gravity="end"
+            android:padding="@dimen/default_padding"
+            android:text="@{viewModel.outputString}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="34sp"
+            android:maxLines="1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/input_text" />
+
+        <Button
+            android:id="@+id/button_clear"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:onClick="@{() -> viewModel.clearInput()}"
+            android:padding="@dimen/default_padding"
+            android:text="@string/button_clear_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="48sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/button_division"
+            app:layout_constraintTop_toBottomOf="@+id/output_text"
+            app:layout_constraintBottom_toTopOf="@id/button_seven"/>
+
+        <Button
+            android:id="@+id/button_division"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:onClick="@{() -> viewModel.addSymbol(@string/button_division_text)}"
+            android:padding="@dimen/default_padding"
+            android:text="@string/button_division_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="48sp"
+            app:layout_constraintLeft_toRightOf="@id/button_clear"
+            app:layout_constraintRight_toLeftOf="@id/button_multiplication"
+            app:layout_constraintTop_toBottomOf="@+id/output_text"
+            app:layout_constraintBottom_toTopOf="@id/button_eight"/>
+
+        <Button
+            android:id="@+id/button_multiplication"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:onClick="@{() -> viewModel.addSymbol(@string/button_multiplication_text)}"
+            android:padding="@dimen/default_padding"
+            android:text="@string/button_multiplication_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="48sp"
+            app:layout_constraintLeft_toRightOf="@id/button_division"
+            app:layout_constraintRight_toLeftOf="@id/button_delete"
+            app:layout_constraintTop_toBottomOf="@+id/output_text"
+            app:layout_constraintBottom_toTopOf="@id/button_nine"/>
+
+        <Button
+            android:id="@+id/button_delete"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:onClick="@{() -> viewModel.deleteLastSymbol()}"
+            android:padding="@dimen/default_padding"
+            android:text="@string/button_delete_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="48sp"
+            app:layout_constraintLeft_toRightOf="@id/button_multiplication"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/output_text"
+            app:layout_constraintBottom_toTopOf="@id/button_minus"/>
+
+        <Button
+            android:id="@+id/button_seven"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:onClick="@{() -> viewModel.addSymbol(@string/button_seven_text)}"
+            android:padding="@dimen/default_padding"
+            android:text="@string/button_seven_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="48sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/button_eight"
+            app:layout_constraintTop_toBottomOf="@+id/button_clear"
+            app:layout_constraintBottom_toTopOf="@id/button_four"/>
+
+        <Button
+            android:id="@+id/button_eight"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:onClick="@{() -> viewModel.addSymbol(@string/button_eight_text)}"
+            android:padding="@dimen/default_padding"
+            android:text="@string/button_eight_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="48sp"
+            app:layout_constraintLeft_toRightOf="@id/button_seven"
+            app:layout_constraintRight_toLeftOf="@id/button_nine"
+            app:layout_constraintTop_toBottomOf="@+id/button_division"
+            app:layout_constraintBottom_toTopOf="@id/button_five"/>
+
+        <Button
+            android:id="@+id/button_nine"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:onClick="@{() -> viewModel.addSymbol(@string/button_nine_text)}"
+            android:padding="@dimen/default_padding"
+            android:text="@string/button_nine_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="48sp"
+            app:layout_constraintLeft_toRightOf="@id/button_eight"
+            app:layout_constraintRight_toLeftOf="@id/button_minus"
+            app:layout_constraintTop_toBottomOf="@+id/button_multiplication"
+            app:layout_constraintBottom_toTopOf="@id/button_six"/>
+
+        <Button
+            android:id="@+id/button_minus"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:onClick="@{() -> viewModel.addSymbol(@string/button_minus_text)}"
+            android:padding="@dimen/default_padding"
+            android:text="@string/button_minus_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="48sp"
+            app:layout_constraintLeft_toRightOf="@id/button_nine"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_delete"
+            app:layout_constraintBottom_toTopOf="@id/button_plus"/>
+
+        <Button
+            android:id="@+id/button_four"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:onClick="@{() -> viewModel.addSymbol(@string/button_four_text)}"
+            android:padding="@dimen/default_padding"
+            android:text="@string/button_four_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="48sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/button_five"
+            app:layout_constraintTop_toBottomOf="@+id/button_seven"
+            app:layout_constraintBottom_toTopOf="@id/button_one"/>
+
+        <Button
+            android:id="@+id/button_five"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:onClick="@{() -> viewModel.addSymbol(@string/button_five_text)}"
+            android:padding="@dimen/default_padding"
+            android:text="@string/button_five_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="48sp"
+            app:layout_constraintLeft_toRightOf="@id/button_four"
+            app:layout_constraintRight_toLeftOf="@id/button_six"
+            app:layout_constraintTop_toBottomOf="@+id/button_eight"
+            app:layout_constraintBottom_toTopOf="@id/button_two"/>
+
+        <Button
+            android:id="@+id/button_six"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:onClick="@{() -> viewModel.addSymbol(@string/button_six_text)}"
+            android:padding="@dimen/default_padding"
+            android:text="@string/button_six_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="48sp"
+            app:layout_constraintLeft_toRightOf="@id/button_five"
+            app:layout_constraintRight_toLeftOf="@id/button_plus"
+            app:layout_constraintTop_toBottomOf="@+id/button_nine"
+            app:layout_constraintBottom_toTopOf="@id/button_three"/>
+
+        <Button
+            android:id="@+id/button_plus"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:onClick="@{() -> viewModel.addSymbol(@string/button_plus_text)}"
+            android:padding="@dimen/default_padding"
+            android:text="@string/button_plus_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="48sp"
+            app:layout_constraintLeft_toRightOf="@id/button_six"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_minus"
+            app:layout_constraintBottom_toTopOf="@id/button_equal"/>
+
+        <Button
+            android:id="@+id/button_one"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:onClick="@{() -> viewModel.addSymbol(@string/button_one_text)}"
+            android:padding="@dimen/default_padding"
+            android:text="@string/button_one_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="48sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/button_two"
+            app:layout_constraintTop_toBottomOf="@+id/button_four"
+            app:layout_constraintBottom_toTopOf="@id/button_bracket_left"/>
+
+        <Button
+            android:id="@+id/button_two"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:onClick="@{() -> viewModel.addSymbol(@string/button_two_text)}"
+            android:padding="@dimen/default_padding"
+            android:text="@string/button_two_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="48sp"
+            app:layout_constraintLeft_toRightOf="@id/button_one"
+            app:layout_constraintRight_toLeftOf="@id/button_three"
+            app:layout_constraintTop_toBottomOf="@+id/button_five"
+            app:layout_constraintBottom_toTopOf="@id/button_zero"/>
+
+        <Button
+            android:id="@+id/button_three"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:onClick="@{() -> viewModel.addSymbol(@string/button_three_text)}"
+            android:padding="@dimen/default_padding"
+            android:text="@string/button_three_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="48sp"
+            app:layout_constraintLeft_toRightOf="@id/button_two"
+            app:layout_constraintRight_toLeftOf="@id/button_equal"
+            app:layout_constraintTop_toBottomOf="@+id/button_six"
+            app:layout_constraintBottom_toTopOf="@id/button_dot"/>
+
+        <Button
+            android:id="@+id/button_equal"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:padding="@dimen/default_padding"
+            android:text="@string/button_equal_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="48sp"
+            android:onClick="@{() -> viewModel.calculate()}"
+            app:layout_constraintLeft_toRightOf="@id/button_three"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_plus"
+            app:layout_constraintBottom_toTopOf="@id/button_bracket_right"/>
+
+        <Button
+            android:id="@+id/button_bracket_left"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:padding="@dimen/default_padding"
+            android:text="@string/button_bracket_left_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="48sp"
+            android:onClick="@{() -> viewModel.addSymbol(@string/button_bracket_left_text)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/button_zero"
+            app:layout_constraintTop_toBottomOf="@+id/button_one" />
+
+
+        <Button
+            android:id="@+id/button_zero"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:onClick="@{() -> viewModel.addSymbol(@string/button_zero_text)}"
+            android:padding="@dimen/default_padding"
+            android:text="@string/button_zero_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="48sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/button_bracket_left"
+            app:layout_constraintRight_toLeftOf="@id/button_dot"
+            app:layout_constraintTop_toBottomOf="@+id/button_two" />
+
+        <Button
+            android:id="@+id/button_dot"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:onClick="@{() -> viewModel.addSymbol(@string/button_dot_text)}"
+            android:padding="@dimen/default_padding"
+            android:text="@string/button_dot_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="48sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/button_zero"
+            app:layout_constraintRight_toLeftOf="@id/button_bracket_right"
+            app:layout_constraintTop_toBottomOf="@+id/button_three" />
+
+        <Button
+            android:id="@+id/button_bracket_right"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:padding="@dimen/default_padding"
+            android:text="@string/button_bracket_right_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="48sp"
+            android:onClick="@{() -> viewModel.addSymbol(@string/button_bracket_right_text)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/button_dot"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_equal"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
