@@ -21,7 +21,7 @@ class ExpressionToRnp {
             if (component == "(") {
                 stack.add(component)
             } else if (component == ")") {
-                while (!stack.isEmpty()) {
+                while (stack.isNotEmpty()) {
                     val last = stack.removeAt(stack.size - 1)
                     if (last != "(") {
                         output.add(last)
@@ -50,8 +50,8 @@ class ExpressionToRnp {
             }
         }
 
-        if (!stack.isEmpty()) {
-            while (!stack.isEmpty()) {
+        if (stack.isNotEmpty()) {
+            while (stack.isNotEmpty()) {
                 val element = stack.removeAt(stack.size - 1)
                 if (element == "(" || element == ")") {
                     throw Exception("Syntax error in expression: $expression  at '$element'")
@@ -66,13 +66,35 @@ class ExpressionToRnp {
     private fun convert2StringComponents(expression: String): Array<String> {
         val result = mutableListOf<String>()
         var prevIndex = 0
-        for (index in 0 until expression.length) {
+        var negativeStartIndex = -1
+        for (index in expression.indices) {
             when (expression[index]) {
-                '+', '-', '×', '÷', '(', ')' -> {
-                    if (!expression.substring(prevIndex, index).trim().isEmpty())
+                '+', '×', '÷', '(', ')' -> {
+                    if (negativeStartIndex != -1) {
+                        result.add(expression.substring(negativeStartIndex, index))
+                        negativeStartIndex = -1
+                    }
+                    if (expression.substring(prevIndex, index).trim().isNotEmpty())
                         result.add(expression.substring(prevIndex, index))
                     result.add(expression[index].toString())
                     prevIndex = index + 1
+                }
+                '-' -> {
+                    if (expression.substring(prevIndex, index).trim().isNotEmpty())
+                    {
+                        result.add(expression.substring(prevIndex, index))
+                        if (expression.substring(index - 1, index).trim() == "+"
+                        || expression.substring(index - 1, index).trim() == "-"
+                        || expression.substring(index - 1, index).trim() == "×"
+                        || expression.substring(index - 1, index).trim() == "÷"
+                        || expression.substring(index - 1, index).trim() == "("
+                        || expression.substring(index - 1, index).trim() == ")") {
+                            negativeStartIndex = index
+                        } else {
+                            result.add(expression[index].toString())
+                            prevIndex = index + 1
+                        }
+                    }
                 }
             }
         }

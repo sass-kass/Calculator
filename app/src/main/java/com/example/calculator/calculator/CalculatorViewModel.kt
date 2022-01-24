@@ -5,10 +5,11 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.calculator.RnpRunner
+import com.example.calculator.rnp.RnpRunner
 import com.example.calculator.database.HistoryDatabase
 import com.example.calculator.repository.HistoryRepository
 import kotlinx.coroutines.launch
+import java.util.*
 
 class CalculatorViewModel(private val database: HistoryDatabase,
                           application: Application
@@ -45,7 +46,7 @@ class CalculatorViewModel(private val database: HistoryDatabase,
             _inputString.value = ""
             _outputString.value = ""
         }
-        if (cleared && (symbol ==  "+" || symbol ==  "-" || symbol ==  "×" || symbol ==  "÷")){
+        if (cleared && (symbol ==  "+" || symbol ==  "×" || symbol ==  "÷")){
             return
         }
         if (!cleared && (symbol ==  "+" || symbol ==  "-" || symbol ==  "×" || symbol ==  "÷")) {
@@ -76,15 +77,19 @@ class CalculatorViewModel(private val database: HistoryDatabase,
                 _inputString.value = (_inputString.value)?.plus(symbol)
                 return
             }
-            if (!cleared && symbol == "-" && _inputString.value!!.last() == '-'
+            if ((_inputString.value!!.length > 1)
+                && !cleared && symbol == "-"
+                && _inputString.value!!.last() == '-'
                 && _inputString.value!!.substring(0, _inputString.value!!.length - 1).last() == '-'
             ) {
                 return
             }
-            if (!cleared && symbol == "-" && _inputString.value!!.last() == '-'
+            if ((_inputString.value!!.length > 1)
+                && !cleared
+                && symbol == "-"
+                && _inputString.value!!.last() == '-'
                 && (_inputString.value!!.substring(0, _inputString.value!!.length - 1).last() == '×'
-                        || _inputString.value!!.substring(0, _inputString.value!!.length - 1)
-                    .last() == '÷')
+                        || _inputString.value!!.substring(0, _inputString.value!!.length - 1).last() == '÷')
             ) {
                 return
             }
@@ -96,14 +101,21 @@ class CalculatorViewModel(private val database: HistoryDatabase,
     fun deleteLastSymbol() {
         if(_inputString.value!!.isNotEmpty()) {
             _inputString.value = (_inputString.value)?.substring(0, _inputString.value!!.length - 1)
+            cleared = false
         }
     }
 
     fun calculate() {
         val expRunner = RnpRunner()
-        _outputString.value = expRunner.calculate(_inputString.value.toString()).toString()
+        try {
+            _outputString.value = expRunner.calculate(_inputString.value.toString()).toString()
+        } catch (e: NullPointerException) {
+            _outputString.value = "error"
+        } catch (e: EmptyStackException) {
+            _outputString.value = "error"
+        }
         appendCalculation()
-
+        cleared = true
     }
 
     private fun appendCalculation() {
